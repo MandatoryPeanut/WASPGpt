@@ -6,6 +6,7 @@ from werkzeug.exceptions import abort
 from .auth import login_required
 from .db import get_db
 
+
 bp = Blueprint('blog', __name__)
 
 
