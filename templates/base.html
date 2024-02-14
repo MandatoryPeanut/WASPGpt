@@ -1,62 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>WASPGpt</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: "Roboto", sans-serif;
-        }
-
-        header {
-            background-color: #f0f0f0;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        h1 {
-        font-size: 40px;
-        font-weight: normal;
-        margin: 0;
-        }
-
-        .top-buttons{
-        display: flex;
-        gap: 10px;
-        }
-
-        button {
-            padding: 10px;
-        }
-
-        middle-image{
-
-        }
-
-
-    </style>
-</head>
-<body>
+<!doctype html>
+<title>{% block title %}{% endblock %} - WASPGpt</title>
+<link rel="stylesheet" href="{{ url_for ('static', filename='style.css') }}">
+<nav>
+    <h1>WASPGpt</h1>
+    <u1>
+        {% if g.user %}
+            <li><span>{{ g.user['username'] }}</span>
+            <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+        {% else %}
+            <li><a href="{{ url_for('auth.register') }}">Register</a>
+            <li><a href="{{ url_for('auth.login') }}">Log In</a>
+        {% endif %}
+    </u1>
+</nav>
+<section class="content">
     <header>
-
-            <h1>WaspGPT</h1>
-
-            <div class="top-buttons">
-
-                <button>Home</button>
-                <button>Login</button>
-                <button>Sign Up</button>
-                <button>About</button>
-
-            </div>
-
+        {% block header %}{% endblock %}
     </header>
-    <div class="middle-image">
-        <img src="">
-    </div>
-</body>
-</html>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</section>
