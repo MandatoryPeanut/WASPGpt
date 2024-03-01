@@ -12,13 +12,11 @@ WASPGpt  D:\Projects\WASPGpt
       update.html
     base.html
   venv
-  .env
   __init__.py
   auth.py
   blog.py
-  config.py
   db.py
-  schema.sql
+  wasp.sql
   Readme.txt
   Project Layout.txt
 External Libraries
