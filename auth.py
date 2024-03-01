@@ -48,7 +48,7 @@ def login():
         db = get_db()
         error = None
         user = db.execute(
-            'SELECT * FROM user where username = ?', (username,)
+            'SELECT * FROM Admin where Username = ?', (username,)
         ).fetchone()
 
         if user is None:
@@ -74,7 +74,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
+            'SELECT * FROM Admin WHERE id = ?', (user_id,)
         ).fetchone()
 
 

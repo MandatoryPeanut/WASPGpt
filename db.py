@@ -30,23 +30,6 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
 
 
-# def fill_db():
-#     db = get_db()
-#
-#     json_file_path = os.path.join(os.path.dirname(__file__), 'db.json')
-#     with open(json_file_path, 'r') as json_file:
-#         data = json.load(json_file)
-#
-#         for table_name, records in data.items():
-#             for record in records:
-#                 columns = ', '.join(record.keys())
-#                 placeholders = ', '.join(['?'] * len(record))
-#                 values = tuple(record.values)
-#
-#                 query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
-#                 db.execute(query, values)
-
-
 def fill_db():  # Fills the database, with data found in json file
     db = get_db()
 
