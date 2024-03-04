@@ -91,7 +91,7 @@ def fill_db():  # Fills the database, with data found in json file
                 jobSite = data.get('jobSite')
 
                 db.execute(
-                    "INSERT INTO Expenditure (Amount, Description, Date, Category, JobSite) VALUES (?, ?, ?, ?, ?)",
+                    "INSERT INTO Income (Amount, Description, Date, Category, JobSite) VALUES (?, ?, ?, ?, ?)",
                     (amount, description, date, category, jobSite)
                 )
 
@@ -103,7 +103,7 @@ def fill_db():  # Fills the database, with data found in json file
                 category = data.get('category')
 
                 db.execute(
-                    "INSERT INTO Expenditure (Amount, Description, Date, Category) VALUES (?, ?, ?, ?)",
+                    "INSERT INTO Taxes (Amount, Description, Date, Category) VALUES (?, ?, ?, ?)",
                     (amount, description, date, category)
                 )
 
