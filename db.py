@@ -110,9 +110,12 @@ def fill_db():  # Fills the database, with data found in json file
         elif table == 'JobSite':
             for data in records:
                 jobSite = data.get('jobSiteID')
+                Name = data.get('Name')
 
-                db.execute("INSERT INTO JobSite (id) VALUES (?)",
-                           jobSite)
+                db.execute(
+                    "INSERT INTO JobSite (id, Name) VALUES (?, ?)",
+                    (jobSite, Name)
+                )
 
 
 @click.command('init-db')

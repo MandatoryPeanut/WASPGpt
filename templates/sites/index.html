@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Hello and welcome to the WASPGpt Administration Portal.{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('sites.register', user_type='admin') }}">Register Admin</a>
+    <a class="action" href="{{ url_for('sites.register', user_type='employee') }}">Register Employee</a>
+    <a class="action" href="{{ url_for('sites.create') }}">Add new JobSite</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for jobSite in jobSites %}
+    <article class="jobSites">
+      <header>
+        <div>
+          <h1>{{ jobSite['id'] }}</h1>
+          <div>
+            {{ jobSite['Name'] }}
+          </div>
+        </div>
+      </header>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+  {% for admin in Admins %}
+    <article class = "Admins">
+      <header>
+        <div>
+          <h1>{{ admin['Username'] }}</h1>
+        </div>
+      </header>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+  {% for tax in Taxes %}
+    <article class = "Admins">
+      <header>
+        <div>
+          <h1>{{ Taxes }}</h1>
+          <div>{{ tax['Amount'] }} on {{ tax['Description'] }} on {{ tax['Date'] }} on {{ tax['Category'] }}</div>
+        </div>
+      </header>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
