@@ -39,9 +39,9 @@ def fill_db():  # Fills the database, with data found in json file
     for table, records in currentData.items():
         if table == 'Admin':
             for data in records:
-                username = data.get('username')
-                password = data.get('password')
-
+                username = data.get('Username')
+                password = data.get('Password')
+                # checks if user is registered or not
                 existing_user = db.execute("SELECT id FROM Admin WHERE Username = ?", (username,)).fetchone()
 
                 if existing_user is None:
@@ -63,11 +63,13 @@ def fill_db():  # Fills the database, with data found in json file
                 manager = data.get('manager')
                 jobSite = data.get('jobSite')
 
-                db.execute(
-                    "INSERT INTO Employee (EmployeeFirstName, EmployeeLastName, Salary, Gender, DOB, Manager, JobSite) "
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    (firstName, lastName, Salary, Gender, DOB, manager, jobSite)
-                )
+                existing_user = db.execute("SELECT id FROM Employee WHERE firstName = ? AND lastName = ?;", (firstName, lastName))
+                if existing_user is None:
+                    db.execute(
+                        "INSERT INTO Employee (EmployeeFirstName, EmployeeLastName, Salary, Gender, DOB, Manager, JobSite) "
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        (firstName, lastName, Salary, Gender, DOB, manager, jobSite)
+                    )
 
         elif table == 'Expenditure':
             for data in records:
@@ -97,25 +99,27 @@ def fill_db():  # Fills the database, with data found in json file
 
         elif table == 'Taxes':
             for data in records:
-                amount = data.get('amount')
-                description = data.get('description')
-                date = data.get('date')
-                category = data.get('category')
+                Amount = data.get('amount')
+                Description = data.get('description')
+                Date = data.get('date')
+                Category = data.get('category')
 
                 db.execute(
                     "INSERT INTO Taxes (Amount, Description, Date, Category) VALUES (?, ?, ?, ?)",
-                    (amount, description, date, category)
+                    (Amount, Description, Date, Category)
                 )
+
 
         elif table == 'JobSite':
             for data in records:
-                jobSite = data.get('jobSiteID')
+                # JobSite = data.get('JobSiteID')
                 Name = data.get('Name')
 
                 db.execute(
-                    "INSERT INTO JobSite (id, Name) VALUES (?, ?)",
-                    (jobSite, Name)
+                    "INSERT INTO JobSite (Name) VALUES (?);",
+                    (Name,)
                 )
+    db.commit()
 
 
 @click.command('init-db')

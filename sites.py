@@ -14,7 +14,7 @@ bp = Blueprint('sites', __name__)
 def index():
     db = get_db()
     jobSites = db.execute(
-        "SELECT id, Name FROM JobSite ORDER BY id;"
+        "SELECT Name FROM JobSite ORDER BY id;"
     ).fetchall()
 
     Admins = db.execute(
@@ -33,50 +33,56 @@ def index():
 def register(user_type):
     if request.method == 'POST':
         user_type = request.form['user_type']
-        # Information for Admin
-        username = request.form['username']
-        password = request.form['password']
-        # Information for Employee
-        firstName = request.form['Employee First Name']
-        lastName = request.form['Employee Last Name']
-        Salary = request.form['Salary']
-        Gender = request.form['Gender']
-        DOB = request.form['Date of Birth']
-        Manager = request.form['Manager']
-        JobSite = request.form['JobSite']
-
-        db = get_db()
         error = None
+        if user_type == 'admin':
+            # Information for Admin
+            username = request.form['username']
+            password = request.form['password']
 
-        if not username:
-            error = 'Username required.'
-        elif not password:
-            error = 'Password required'
-        elif user_type not in ['admin', 'employee']:
-            error = 'Invalid user type'
+            if not username:
+                error = 'Username required.'
+            elif not password:
+                error = 'Password required'
 
-        if error is None:
-            try:
-                if user_type == 'admin':
+            if error is None:
+                db = get_db()
+                try:
                     db.execute(
                         "INSERT INTO Admin (Username, Password) VALUES (?, ?)",
                         (username, generate_password_hash(password))
                     )
-                elif user_type == 'employee':
-                    db.execute(
-                        "INSERT INTO Employee (Username, Password) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                        (firstName, lastName, Salary, Gender, DOB, Manager, JobSite)
-                    )
-                db.commit()
-            except db.IntegrityError:
-                if user_type == 'admin':
+                    db.commit()
+                except db.IntegrityError:
                     error = f"Administrator {username} is already registered."
-                elif user_type == 'employee':
-                    error = f"Employee {firstName, ' ', lastName} is already registered."
             else:
                 return redirect(url_for("sites.index"))
             flash(error)
-    return render_template('sites/register.html')
+
+        elif user_type == 'employee':
+            # Information for Employee
+            firstName = request.form['Employee First Name']
+            lastName = request.form['Employee Last Name']
+            Salary = request.form['Salary']
+            Gender = request.form['Gender']
+            DOB = request.form['Date of Birth']
+            Manager = request.form['Manager']
+            JobSite = request.form['JobSite']
+
+            if not firstName or not lastName or not Salary or not Gender or not DOB or not Manager or not JobSite:
+                error = 'You are missing one or more important fields of information.'
+            db = get_db()
+            try:
+                db.execute(
+                    "INSERT INTO Employee (Username, Password) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (firstName, lastName, Salary, Gender, DOB, Manager, JobSite)
+                )
+                db.commit()
+            except db.IntegrityError:
+                error = f"Employee {firstName, ' ', lastName} is already registered."
+            else:
+                return redirect(url_for("sites.index"))
+            flash(error)
+    return render_template('sites/register.html', user_type=user_type)
 
 
 @bp.route('/create')
@@ -89,3 +95,25 @@ def create():
         db.execute(
 
         )
+
+
+@bp.route('/display')
+@login_required
+def display():
+    db = get_db()
+    if request.method == 'POST':
+        jobSiteID = request.method['jobSite']
+
+        Employees = db.execute(
+            "SELECT * FROM Employee WHERE Employee.JobSite= ?;", jobSiteID
+        ).fetchall()
+        Income = db.execute(
+            "SELECT * FROM Income WHERE Income.JobSite= ?;", jobSiteID
+        ).fetchall()
+        Expenditure = db.execute(
+            "SELECT * FROM Expenditure WHERE Expenditure.JobSite= ?;", jobSiteID
+        ).fetchall()
+        db.commit()
+        return render_template('sites/display.html', Employees=Employees, Income=Income, Expenditure=Expenditure)
+    else:
+        return redirect(url_for("sites.index"))

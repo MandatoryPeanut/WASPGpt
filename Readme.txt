@@ -1,6 +1,6 @@
 WASPGpt is a Web Application Security Project that I am developing, it utilizes HTML, and CSS for the front end, with Flask, and Sqlite3 for the backend.
 The only thing that is required of you is to buy an authentication key from OpenAI to use the ChatGPT API.
-This key will be looked for in the {} file, if it is not found the application will first prompt you to enter the key.
+This key will be looked for in a file, if it is not found the application will first prompt you to enter the key.
 
 # Database:
 This database uses sqlite3, database is stored outside the project folder, in the instance folder.

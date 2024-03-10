@@ -1,15 +1,34 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}Register{% endblock %}</h1>
+    <h1>{% block title %}Registration{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
     <form method="post">
+        {% if user_type == 'admin' %}
         <label for="username">Username</label>
         <input name="username" id="username" required>
         <label for="password">Password</label>
         <input name="password" id="password" required>
         <input type="submit" value="Reigster">
+
+        {% elif user_type == 'employee' %}
+        <label for="firstName">First Name</label>
+        <input name="firstName" id="firstName" required>
+        <label for="lastName">Last Name</label>
+        <input name="lastName" id="lastName" required>
+        <label for="Salary">Salary</label>
+        <input name="Salary" id="Salary" required>
+        <label for="Gender">Gender</label>
+        <input name="Gender" id="Gender" required>
+        <label for="DOB">Date of Birth</label>
+        <input name="DOB" id="DOB" required>
+        <label for="Manager">Manager</label>
+        <input name="Manager" id="Manager" required>
+        <label for="JobSite">JobSite</label>
+        <input name="JobSite" id="JobSite" required>
+        <input type="submit" value="Reigster">
+        {% endif %}
     </form>
 {% endblock %}

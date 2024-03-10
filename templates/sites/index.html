@@ -10,14 +10,12 @@
 {% endblock %}
 
 {% block content %}
-  {% for jobSite in jobSites %}
-    <article class="jobSites">
+<h1>Job Site Locations:</h1>
+{% for jobSite in jobSites %}
+<article class="jobSites">
       <header>
         <div>
-          <h1>{{ jobSite['id'] }}</h1>
-          <div>
-            {{ jobSite['Name'] }}
-          </div>
+              <a class="action" href="{{ url_for('sites.display', jobSiteID=jobSite['id']) }}">{{ jobSite['Name'] }}</a>
         </div>
       </header>
     </article>
@@ -25,6 +23,7 @@
       <hr>
     {% endif %}
   {% endfor %}
+<h1>Administrators:</h1>
   {% for admin in Admins %}
     <article class = "Admins">
       <header>
@@ -37,12 +36,13 @@
       <hr>
     {% endif %}
   {% endfor %}
+<h1>Cumulative Taxes:</h1>
   {% for tax in Taxes %}
-    <article class = "Admins">
+    <article class = "Taxes">
       <header>
         <div>
-          <h1>{{ Taxes }}</h1>
-          <div>{{ tax['Amount'] }} on {{ tax['Description'] }} on {{ tax['Date'] }} on {{ tax['Category'] }}</div>
+          <h1>{{ tax['Description'] }}</h1>
+          <div>{{ tax['Amount'] }} {{ tax['Date'] }} {{ tax['Category'] }}</div>
         </div>
       </header>
     </article>
