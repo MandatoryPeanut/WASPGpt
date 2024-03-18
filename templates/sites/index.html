@@ -15,7 +15,7 @@
 <article class="jobSites">
       <header>
         <div>
-              <a class="action" href="{{ url_for('sites.display', jobSiteID=jobSite['id']) }}">{{ jobSite['Name'] }}</a>
+              <a class="action" href="{{ url_for('sites.display', jobSiteID=jobSite['id'], name=jobSite['Name']) }}">{{ jobSite['Name'] }}</a>
         </div>
       </header>
     </article>

@@ -63,7 +63,7 @@ def fill_db():  # Fills the database, with data found in json file
                 manager = data.get('manager')
                 jobSite = data.get('jobSite')
 
-                existing_user = db.execute("SELECT id FROM Employee WHERE firstName = ? AND lastName = ?;", (firstName, lastName))
+                existing_user = db.execute("SELECT id FROM Employee WHERE EmployeeFirstName = ? AND EmployeeLastName = ?;", (firstName, lastName))
                 if existing_user is None:
                     db.execute(
                         "INSERT INTO Employee (EmployeeFirstName, EmployeeLastName, Salary, Gender, DOB, Manager, JobSite) "

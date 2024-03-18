@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block header %}
+    <h1>{% block title %} {{ name }} {% endblock %}</h1>
+{% endblock %}
+
+
+{% block content %}
+<h1>Employees:</h1>
+{% for emp in Employees %}
+<article class="Employees">
+    <header>
+        <div>
+            <h1>{{ emp['EmployeeFirstName'] }} {{ emp['EmployeeLastName'] }}</h1>
+            <div>
+                {{ emp['Salary'] }} {{ emp['Gender'] }} {{ emp['DOB'] }} {{ emp['Manager'] }}
+            </div>
+        </div>
+    </header>
+</article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+
+<h1>Income:</h1>
+{% for inc in Income %}
+<article class="Income">
+    <header>
+        <div>
+            <h1>{{ inc['Category'] }}</h1>
+            <div>
+                {{ inc['Amount'] }} {{ inc['Description'] }} {{ inc['Date'] }}
+            </div>
+        </div>
+    </header>
+</article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+
+<h1>Expenditure:</h1>
+{% for exp in Expenditure %}
+<article class="Expenditure">
+    <header>
+        <div>
+            <h1>{{ exp['Category'] }}</h1>
+            <div>
+                {{ exp['Amount'] }} {{ exp['Description'] }} {{ exp['Date'] }}
+            </div>
+        </div>
+    </header>
+</article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}
+

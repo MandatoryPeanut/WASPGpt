@@ -6,12 +6,12 @@
 
 {% block content %}
     <form method="post">
+        <input type="hidden" name="user_type" value="{{ user_type }}">
         {% if user_type == 'admin' %}
         <label for="username">Username</label>
         <input name="username" id="username" required>
         <label for="password">Password</label>
         <input name="password" id="password" required>
-        <input type="submit" value="Reigster">
 
         {% elif user_type == 'employee' %}
         <label for="firstName">First Name</label>
@@ -28,7 +28,7 @@
         <input name="Manager" id="Manager" required>
         <label for="JobSite">JobSite</label>
         <input name="JobSite" id="JobSite" required>
-        <input type="submit" value="Reigster">
         {% endif %}
+        <input type="submit" value="Reigster">
     </form>
 {% endblock %}

@@ -14,7 +14,7 @@ bp = Blueprint('sites', __name__)
 def index():
     db = get_db()
     jobSites = db.execute(
-        "SELECT Name FROM JobSite ORDER BY id;"
+        "SELECT id, Name FROM JobSite ORDER BY id;"
     ).fetchall()
 
     Admins = db.execute(
@@ -54,9 +54,9 @@ def register(user_type):
                     db.commit()
                 except db.IntegrityError:
                     error = f"Administrator {username} is already registered."
+                    flash(error)
             else:
                 return redirect(url_for("sites.index"))
-            flash(error)
 
         elif user_type == 'employee':
             # Information for Employee
@@ -81,7 +81,11 @@ def register(user_type):
                 error = f"Employee {firstName, ' ', lastName} is already registered."
             else:
                 return redirect(url_for("sites.index"))
-            flash(error)
+
+        if error is None:
+            flash("Registration successful.")
+            return redirect(url_for("sites.index"))
+
     return render_template('sites/register.html', user_type=user_type)
 
 
@@ -97,23 +101,20 @@ def create():
         )
 
 
-@bp.route('/display')
+@bp.route('/display/<int:jobSiteID>/<string:name>', methods=['GET'])
 @login_required
-def display():
+def display(jobSiteID, name):
     db = get_db()
-    if request.method == 'POST':
-        jobSiteID = request.method['jobSite']
-
-        Employees = db.execute(
-            "SELECT * FROM Employee WHERE Employee.JobSite= ?;", jobSiteID
-        ).fetchall()
-        Income = db.execute(
-            "SELECT * FROM Income WHERE Income.JobSite= ?;", jobSiteID
-        ).fetchall()
-        Expenditure = db.execute(
-            "SELECT * FROM Expenditure WHERE Expenditure.JobSite= ?;", jobSiteID
-        ).fetchall()
-        db.commit()
-        return render_template('sites/display.html', Employees=Employees, Income=Income, Expenditure=Expenditure)
-    else:
-        return redirect(url_for("sites.index"))
+    Employees = db.execute(
+        "SELECT * FROM Employee WHERE Employee.JobSite = ?;", (jobSiteID,)
+    ).fetchall()
+    Income = db.execute(
+        "SELECT * FROM Income WHERE Income.JobSite = ?;", (jobSiteID,)
+    ).fetchall()
+    Expenditure = db.execute(
+        "SELECT * FROM Expenditure WHERE Expenditure.JobSite = ?;", (jobSiteID,)
+    ).fetchall()
+    db.commit()
+    return render_template(
+        'sites/display.html', Employees=Employees, Income=Income,
+        Expenditure=Expenditure, jobSiteID=jobSiteID, name=name)
