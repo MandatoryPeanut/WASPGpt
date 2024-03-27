@@ -106,15 +106,18 @@ def create():
 def display(jobSiteID, name):
     db = get_db()
     Employees = db.execute(
-        "SELECT * FROM Employee WHERE Employee.JobSite = ?;", (jobSiteID,)
+        "SELECT * FROM Employee JOIN JobSite ON JobSite.id = Employee.JobSite WHERE Employee.JobSite = ?;", (jobSiteID,)
     ).fetchall()
     Income = db.execute(
-        "SELECT * FROM Income WHERE Income.JobSite = ?;", (jobSiteID,)
+        "SELECT * FROM Income JOIN JobSite ON JobSite.id = Income.JobSite WHERE Income.JobSite = ?;", (jobSiteID,)
     ).fetchall()
     Expenditure = db.execute(
-        "SELECT * FROM Expenditure WHERE Expenditure.JobSite = ?;", (jobSiteID,)
+        "SELECT * FROM Expenditure JOIN JobSite ON JobSite.id = Expenditure.JobSite WHERE Expenditure.JobSite = ?;", (jobSiteID,)
     ).fetchall()
-    db.commit()
+    print("Employees: ",Employees)
+    print("JobSite ID:", jobSiteID)
+    print("income data:", Income)
+    print("expenditure data:", Expenditure)
     return render_template(
         'sites/display.html', Employees=Employees, Income=Income,
         Expenditure=Expenditure, jobSiteID=jobSiteID, name=name)

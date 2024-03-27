@@ -63,7 +63,9 @@ def fill_db():  # Fills the database, with data found in json file
                 manager = data.get('manager')
                 jobSite = data.get('jobSite')
 
-                existing_user = db.execute("SELECT id FROM Employee WHERE EmployeeFirstName = ? AND EmployeeLastName = ?;", (firstName, lastName))
+                existing_user = db.execute(
+                    "SELECT id FROM Employee WHERE EmployeeFirstName = ? AND EmployeeLastName = ?;",
+                    (firstName, lastName)).fetchone()
                 if existing_user is None:
                     db.execute(
                         "INSERT INTO Employee (EmployeeFirstName, EmployeeLastName, Salary, Gender, DOB, Manager, JobSite) "
@@ -112,7 +114,7 @@ def fill_db():  # Fills the database, with data found in json file
 
         elif table == 'JobSite':
             for data in records:
-                # JobSite = data.get('JobSiteID')
+                JobSite = data.get('id')
                 Name = data.get('Name')
 
                 db.execute(
@@ -120,6 +122,54 @@ def fill_db():  # Fills the database, with data found in json file
                     (Name,)
                 )
     db.commit()
+
+
+def test_db():
+    db = get_db()
+    Admin = db.execute(
+        "SELECT * FROM Admin;"
+    ).fetchall()
+    Employee = db.execute(
+        "SELECT * FROM Employee;"
+    ).fetchall()
+    Expenditure = db.execute(
+        "SELECT * FROM Expenditure;"
+    ).fetchall()
+    Income = db.execute(
+        "SELECT * FROM Income;"
+    ).fetchall()
+    Taxes = db.execute(
+        "SELECT * FROM Taxes;"
+    ).fetchall()
+    JobSite = db.execute(
+        "SELECT * FROM JobSite;"
+    ).fetchall()
+
+    print("Admins:")
+    for row in Admin:
+        print(dict(row))
+    print("\nEmployee:")
+    for row in Employee:
+        print(dict(row))
+    print("\nExpenditure:")
+    for row in Expenditure:
+        print(dict(row))
+    print("\nIncome:")
+    for row in Income:
+        print(dict(row))
+    print("\nTaxes:")
+    for row in Taxes:
+        print(dict(row))
+    print("\nJobSite:")
+    for row in JobSite:
+        print(dict(row))
+
+
+@click.command('test-db')
+def test_db_command():
+    """Queries Database.."""
+    test_db()
+    click.echo('Finished queries.')
 
 
 @click.command('init-db')
@@ -134,6 +184,11 @@ def fill_db_command():
     """Inserts data into the database using the database file in the WASPGpt Database Folder."""
     fill_db()
     click.echo('Database filled.')
+
+
+def test_app(app):
+    app.teardown_appcontext(close_db)
+    app.cli.add_command(test_db_command)
 
 
 def init_app(app):
