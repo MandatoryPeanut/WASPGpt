@@ -28,6 +28,12 @@
         <input name="Manager" id="Manager" required>
         <label for="JobSite">JobSite</label>
         <input name="JobSite" id="JobSite" required>
+
+        {%elif user_type == 'manager'%}
+
+        {%elif user_type == 'job-site'%}
+        <label for="Name">Name</label>
+        <input name="Name" id="Name" required>
         {% endif %}
         <input type="submit" value="Reigster">
     </form>

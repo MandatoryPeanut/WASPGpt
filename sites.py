@@ -73,7 +73,8 @@ def register(user_type):
             db = get_db()
             try:
                 db.execute(
-                    "INSERT INTO Employee (Username, Password) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO Employee (EmployeeFirstName, EmployeeLastName, Salary, Gender, DOB, Manager, JobSite) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)",
                     (firstName, lastName, Salary, Gender, DOB, Manager, JobSite)
                 )
                 db.commit()
@@ -82,6 +83,42 @@ def register(user_type):
             else:
                 return redirect(url_for("sites.index"))
 
+        elif user_type == 'manager':
+            # Information for Manager
+            username = request.form['username']
+            password = request.form['password']
+
+            if not username:
+                error = 'Username required.'
+            elif not password:
+                error = 'Password required'
+
+            if error is None:
+                db = get_db()
+                try:
+                    db.execute(
+                        "INSERT INTO Manager (Username, Password) VALUES (?, ?)",
+                        (username, generate_password_hash(password))
+                    )
+                    db.commit()
+                except db.IntegrityError:
+                    error = f"Manager {username} is already registered."
+                    flash(error)
+            else:
+                return redirect(url_for("sites.index"))
+
+        elif user_type == 'job-site':
+            Name = request.form['Name']
+            db = get_db()
+            existing_site = db.execute("SELECT Name FROM JobSite WHERE Name = ?;", (Name,)).fetchone()
+            if existing_site is not None:
+                error = f"Job Site with the name {Name} already exists."
+                flash(error)
+            else:
+                db.execute("INSERT INTO JobSite (Name) VALUES (?);", (Name,))
+                db.commit()
+                flash("Job Site successfully created.")
+                return redirect(url_for("sites.index"))
         if error is None:
             flash("Registration successful.")
             return redirect(url_for("sites.index"))
@@ -89,22 +126,33 @@ def register(user_type):
     return render_template('sites/register.html', user_type=user_type)
 
 
-@bp.route('/create')
+@bp.route('/create', methods=['POST'])
 @login_required
 def create():
-    db = get_db()
     if request.method == 'POST':
+        Name = request.form['Name']
         error = None
+        db = get_db()
+        existing_site = db.execute("SELECT Name FROM JobSite VALUES ?;", (Name,))
+        if existing_site is not None:
+            error = f"Job Site with the name {Name} already exists."
+            flash(error)
+        else:
+            db.execute("INSERT INTO JobSite VALUES ?;", (Name,))
+            db.commit()
+            flash("Job Site successfully created.")
+            return redirect(url_for("sites.index"))
+    else:
+        return render_template('sites/create.html')
 
-        db.execute(
 
-        )
-
-
-@bp.route('/display/<int:jobSiteID>/<string:name>', methods=['GET'])
+@bp.route('/display/<int:jobSiteID>', methods=['GET'])
 @login_required
-def display(jobSiteID, name):
+def display(jobSiteID):
     db = get_db()
+    Name = db.execute(
+        "SELECT Name FROM JobSite WHERE id = ?;", (jobSiteID,)
+    ).fetchone()
     Employees = db.execute(
         "SELECT * FROM Employee JOIN JobSite ON JobSite.id = Employee.JobSite WHERE Employee.JobSite = ?;", (jobSiteID,)
     ).fetchall()
@@ -112,12 +160,9 @@ def display(jobSiteID, name):
         "SELECT * FROM Income JOIN JobSite ON JobSite.id = Income.JobSite WHERE Income.JobSite = ?;", (jobSiteID,)
     ).fetchall()
     Expenditure = db.execute(
-        "SELECT * FROM Expenditure JOIN JobSite ON JobSite.id = Expenditure.JobSite WHERE Expenditure.JobSite = ?;", (jobSiteID,)
+        "SELECT * FROM Expenditure JOIN JobSite ON JobSite.id = Expenditure.JobSite WHERE Expenditure.JobSite = ?;",
+        (jobSiteID,)
     ).fetchall()
-    print("Employees: ",Employees)
-    print("JobSite ID:", jobSiteID)
-    print("income data:", Income)
-    print("expenditure data:", Expenditure)
     return render_template(
         'sites/display.html', Employees=Employees, Income=Income,
-        Expenditure=Expenditure, jobSiteID=jobSiteID, name=name)
+        Expenditure=Expenditure, jobSiteID=jobSiteID, Name=Name)
