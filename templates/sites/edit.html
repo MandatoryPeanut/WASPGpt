@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Edit{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    <label for="EmployeeFirstName">First Name:</label>
+    <input name="EmployeeFirstName" id="EmployeeFirstName"
+           value="{{ request.form['EmployeeFirstName'] or data['EmployeeFirstName'] }}" required>
+
+    <label for="EmployeeFirstName">Last Name:</label>
+    <input name="EmployeeLastName" id="EmployeeLastName"
+           value="{{ request.form['EmployeeLastName'] or data['EmployeeLastName'] }}" required>
+
+    <label for="Salary">Salary:</label>
+    <input name="Salary" id="Salary" value="{{ request.form['Salary'] or data['Salary'] }}" required>
+
+    <label for="Gender">Gender:</label>
+    <input name="Gender" id="Gender" value="{{ request.form['Gender'] or data['Gender'] }}" required>
+
+    <label for="DOB">DOB:</label>
+    <input name="DOB" id="DOB" value="{{ request.form['DOB'] or data['DOB'] }}" required>
+
+    <label for="Manager">Manager:</label>
+    <input name="Manager" id="Manager" value="{{ request.form['Manager'] or data['Manager'] }}" required>
+
+    <label for="JobSite">JobSite:</label>
+    <input name="JobSite" id="JobSite" value="{{ request.form['JobSite'] or data['JobSite'] }}" required>
+
+    <input type="submit" value="Save">
+</form>
+<hr>
+<form action="{{ url_for('sites.delete', id=data['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+</form>
+{% endblock %}

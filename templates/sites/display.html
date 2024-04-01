@@ -13,6 +13,7 @@
             <h1>{{ emp['EmployeeFirstName'] }} {{ emp['EmployeeLastName'] }}</h1>
             <div>
                 {{ emp['Salary'] }} {{ emp['Gender'] }} {{ emp['DOB'] }} {{ emp['Manager'] }}
+                <a class="action" href="{{url_for('sites.edit', id=emp['id']) }}">Edit</a>
             </div>
         </div>
     </header>
@@ -30,6 +31,7 @@
             <h1>{{ inc['Category'] }}</h1>
             <div>
                 {{ inc['Amount'] }} {{ inc['Description'] }} {{ inc['Date'] }}
+                <a class="action" href="{{url_for('sites.edit', id=inc['id']) }}">Edit</a>
             </div>
         </div>
     </header>
@@ -47,6 +49,7 @@
             <h1>{{ exp['Category'] }}</h1>
             <div>
                 {{ exp['Amount'] }} {{ exp['Description'] }} {{ exp['Date'] }}
+                <a class="action" href="{{url_for('sites.edit', id=exp['id']) }}">Edit</a>
             </div>
         </div>
     </header>
