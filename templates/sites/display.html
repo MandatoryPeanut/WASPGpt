@@ -31,7 +31,6 @@
             <h1>{{ inc['Category'] }}</h1>
             <div>
                 {{ inc['Amount'] }} {{ inc['Description'] }} {{ inc['Date'] }}
-                <a class="action" href="{{url_for('sites.edit', id=inc['id']) }}">Edit</a>
             </div>
         </div>
     </header>
@@ -49,7 +48,6 @@
             <h1>{{ exp['Category'] }}</h1>
             <div>
                 {{ exp['Amount'] }} {{ exp['Description'] }} {{ exp['Date'] }}
-                <a class="action" href="{{url_for('sites.edit', id=exp['id']) }}">Edit</a>
             </div>
         </div>
     </header>

@@ -32,6 +32,7 @@ def index():
 @bp.route('/register/<string:user_type>', methods=['GET', 'POST'])
 @login_required
 def register(user_type):
+    sites = getSites()  # Data for listing sites
     if request.method == 'POST':
         user_type = request.form['user_type']
         error = None
@@ -61,20 +62,27 @@ def register(user_type):
 
         elif user_type == 'employee':
             # Information for Employee
-            firstName = request.form['Employee First Name']
-            lastName = request.form['Employee Last Name']
+            firstName = request.form['EmployeeFirstName']
+            lastName = request.form['EmployeeLastName']
             Salary = request.form['Salary']
             Gender = request.form['Gender']
-            DOB = request.form['Date of Birth']
+            DOB = request.form['DOB']
             Manager = request.form['Manager']
             JobSite = request.form['JobSite']
+            print(DOB)
+            print(Gender)
+            print(Manager)
+            print(JobSite)
+            print(Salary)
+            print(lastName)
+            print(firstName)
 
             db = get_db()
             existing_emp = db.execute(
                 "SELECT EmployeeFirstName, EmployeeLastName FROM Employee "
                 "WHERE EmployeeFirstName = ? AND EmployeeLastName = ?;", (firstName, lastName)
             ).fetchall()
-            if existing_emp is not None:
+            if existing_emp is None:
                 error = f"Employee {firstName, lastName} already exists."
                 flash(error)
             else:
@@ -128,7 +136,7 @@ def register(user_type):
             flash("Registration successful.")
             return redirect(url_for("sites.index"))
 
-    return render_template('sites/register.html', user_type=user_type)
+    return render_template('sites/register.html', user_type=user_type, sites=sites)
 
 
 @bp.route('/display/<int:jobSiteID>', methods=['GET', 'POST'])
@@ -193,6 +201,13 @@ def getEmployeeData(id):
     if data is None:
         abort(404, f"Employee {id} doesn't exist.")
     return data
+
+
+def getSites():
+    sites = get_db().execute(
+        "SELECT * FROM JobSite;"
+    ).fetchall()
+    return sites
 
 
 @bp.route('/delete/<int:id>', methods=['POST', 'GET'])
