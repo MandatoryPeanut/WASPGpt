@@ -6,3 +6,5 @@ wasp.sql
 WASPGpt.png
 auth register backup.txt
 blog.py
+.env
+.gitignore

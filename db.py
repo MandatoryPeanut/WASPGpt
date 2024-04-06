@@ -53,6 +53,23 @@ def fill_db():  # Fills the database, with data found in json file
                 else:
                     print(f"User with username: {username} already exists.")
 
+        elif table == 'Manager':
+            for data in records:
+                username = data.get('Username')
+                password = data.get('Password')
+                jobSite = data.get('jobSite')
+                # checks if user is registered or not
+                existing_user = db.execute("SELECT id FROM Manager WHERE Username = ?", (username,)).fetchone()
+
+                if existing_user is None:
+                    db.execute(
+                        "INSERT INTO Manager (Username, Password, JobSite) VALUES (?, ?, ?)",
+                        (username, generate_password_hash(password), jobSite)
+                    )
+                    db.commit()
+                else:
+                    print(f"User with username: {username} already exists.")
+
         elif table == 'Employee':
             for data in records:
                 firstName = data.get('employeeFirstName')
@@ -129,6 +146,9 @@ def test_db():
     Admin = db.execute(
         "SELECT * FROM Admin;"
     ).fetchall()
+    Manager = db.execute(
+        "SELECT * FROM Manager;"
+    ).fetchall()
     Employee = db.execute(
         "SELECT * FROM Employee;"
     ).fetchall()
@@ -147,6 +167,9 @@ def test_db():
 
     print("Admins:")
     for row in Admin:
+        print(dict(row))
+    print("Manager:")
+    for row in Manager:
         print(dict(row))
     print("\nEmployee:")
     for row in Employee:

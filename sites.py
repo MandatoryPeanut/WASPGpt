@@ -69,13 +69,6 @@ def register(user_type):
             DOB = request.form['DOB']
             Manager = request.form['Manager']
             JobSite = request.form['JobSite']
-            print(DOB)
-            print(Gender)
-            print(Manager)
-            print(JobSite)
-            print(Salary)
-            print(lastName)
-            print(firstName)
 
             db = get_db()
             existing_emp = db.execute(
