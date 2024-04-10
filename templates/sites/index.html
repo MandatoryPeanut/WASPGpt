@@ -4,6 +4,7 @@
   <h1>{% block title %}Hello and welcome to the WASPGpt Management Portal.{% endblock %}</h1>
   {% if g.user %}
     <a class="action" href="{{ url_for('sites.register', user_type='admin') }}">Register Admin</a>
+    <a class="action" href="{{ url_for('sites.register', user_type='manager') }}">Register Manager</a>
     <a class="action" href="{{ url_for('sites.register', user_type='employee') }}">Register Employee</a>
     <a class="action" href="{{ url_for('sites.register', user_type='job-site') }}">Register New Job Site</a>
   {% endif %}

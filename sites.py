@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, session
 )
 from werkzeug.security import generate_password_hash
 from werkzeug.exceptions import abort
@@ -37,6 +37,10 @@ def register(user_type):
         user_type = request.form['user_type']
         error = None
         if user_type == 'admin':
+            if session['user_status'] != 'admin':
+                flash('You do not have permission to perform this action.')
+                return redirect(url_for('index'))
+
             # Information for Admin
             username = request.form['username']
             password = request.form['password']
@@ -89,9 +93,12 @@ def register(user_type):
                 return redirect(url_for("sites.index"))
 
         elif user_type == 'manager':
+            if session['user_status'] != 'admin':
+                flash('You do not have permission to perform this action.')
+                return redirect(url_for('index'))
             # Information for Manager
-            username = request.form['username']
-            password = request.form['password']
+            username = request.form['Manager-username']
+            password = request.form['Manager-password']
 
             if not username:
                 error = 'Username required.'

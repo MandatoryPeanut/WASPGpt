@@ -1,21 +1,23 @@
 WASPGpt  D:\Projects\WASPGpt
-  instance
+  logs
   static
     style.css
   templates
     auth
       login.html
+      h4ck0r.html
+    sites
       register.html
-    blog
-      create.html
+      edit.html
       index.html
       update.html
     base.html
   venv
   __init__.py
   auth.py
-  blog.py
+  sites.py
   db.py
+  chatgpt.py
   wasp.sql
   Readme.txt
   Project Layout.txt

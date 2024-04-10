@@ -30,11 +30,11 @@ def login():
             ).fetchone()
             status = None
 
-            if admin:
+            if admin is not None:
                 status = 'admin'
                 if not check_password_hash(admin['password'], password):
                     error = 'Incorrect password'
-            elif manager:
+            elif manager is not None:
                 status = 'manager'
                 if not check_password_hash(manager['password'], password):
                     error = 'Incorrect password.'
@@ -45,6 +45,8 @@ def login():
                 session.clear()
                 session['user_id'] = admin['id'] if admin else manager['id']
                 session['user_status'] = status
+
+                g.user_status = status
                 return redirect(url_for('index'))
 
             flash(error)
