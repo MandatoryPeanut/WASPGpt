@@ -11,10 +11,11 @@
     <header>
         <div>
             <h1>{{ emp['EmployeeFirstName'] }} {{ emp['EmployeeLastName'] }}</h1>
-            <div>
-                {{ emp['Salary'] }} {{ emp['Gender'] }} {{ emp['DOB'] }} {{ emp['Manager'] }}
-                <a class="action" href="{{url_for('sites.edit', id=emp['id']) }}">Edit</a>
-            </div>
+            <div>Salary: {{ emp['Salary'] }}</div>
+            <div>Gender: {{ emp['Gender'] }}</div>
+            <div>Date of Birth: {{ emp['DOB'] }}</div>
+            <div>Manager: {{ emp['Manager'] }}</div>
+            <a class="action" href="{{url_for('sites.edit', id=emp['id']) }}">Edit</a>
         </div>
     </header>
 </article>
@@ -29,9 +30,9 @@
     <header>
         <div>
             <h1>{{ inc['Category'] }}</h1>
-            <div>
-                {{ inc['Amount'] }} {{ inc['Description'] }} {{ inc['Date'] }}
-            </div>
+            <div>Amount: {{ inc['Amount'] }}</div>
+            <div>Description: {{ inc['Description'] }}</div>
+            <div>Date: {{ inc['Date'] }}</div>
         </div>
     </header>
 </article>
@@ -46,9 +47,9 @@
     <header>
         <div>
             <h1>{{ exp['Category'] }}</h1>
-            <div>
-                {{ exp['Amount'] }} {{ exp['Description'] }} {{ exp['Date'] }}
-            </div>
+            <div>Amount: {{ exp['Amount'] }}</div>
+            <div>Description: {{ exp['Description'] }}</div>
+            <div>Date: {{ exp['Date'] }}</div>
         </div>
     </header>
 </article>

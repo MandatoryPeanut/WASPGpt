@@ -213,7 +213,6 @@ def getSites():
 @bp.route('/delete/<int:id>', methods=['POST', 'GET'])
 @login_required
 def delete(id):
-    getEmployeeData(id)
     db = get_db()
     db.execute("DELETE FROM Employee WHERE id = ?;", (id,))
     db.commit()
