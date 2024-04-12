@@ -1,0 +1,68 @@
+DROP TABLE IF EXISTS Admin;
+DROP TABLE IF EXISTS Manager;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Expenditure;
+DROP TABLE IF EXISTS Income;
+DROP TABLE IF EXISTS Taxes;
+DROP TABLE IF EXISTS JobSite;
+
+
+
+CREATE TABLE Admin (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT UNIQUE NOT NULL,
+    Password TEXT NOT NULL
+);
+
+CREATE TABLE Manager (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Username TEXT UNIQUE NOT NULL,
+    Password TEXT NOT NULL,
+    JobSite INTEGER,
+    FOREIGN KEY (JobSite) REFERENCES JobSite(id)
+);
+
+CREATE TABLE Employee (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    EmployeeFirstName TEXT,
+    EmployeeLastName TEXT,
+    Salary INTEGER,
+    Gender TEXT,
+    DOB DATE,
+    Manager TEXT,
+    JobSite INTEGER,
+    FOREIGN KEY (JobSite) REFERENCES JobSite(id)
+);
+
+CREATE TABLE Expenditure (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Amount DECIMAL(10, 2) NOT NULL,
+    Description TEXT,
+    Date DATE,
+    Category TEXT,
+    JobSite INTEGER,
+    FOREIGN KEY (JobSite) REFERENCES JobSite(id)
+);
+
+CREATE TABLE Income (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Amount DECIMAL(10, 2) NOT NULL,
+    Description TEXT,
+    Date DATE,
+    Category TEXT,
+    JobSite INTEGER,
+    FOREIGN KEY (JobSite) REFERENCES JobSite(id)
+);
+
+CREATE TABLE Taxes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Amount DECIMAL(10, 2) NOT NULL,
+    Description TEXT,
+    Date DATE,
+    Category TEXT
+);
+
+CREATE TABLE JobSite (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT
+);

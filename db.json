@@ -1,0 +1,105 @@
+{
+  "Admin": [
+    {"Username": "admin", "Password": "q37jVfuzJVZg58OyTRvf"},
+    {"Username": "admin2", "Password": "FMUTVSeVLOMvvjT2NeZE"}
+  ],
+    "Manager": [
+    {"Username": "manager", "Password": "k56kghh355dvb5DD9ss", "jobSite":  1},
+    {"Username": "manager2", "Password": "0h9bjfRt62Etgbcxsf5", "jobSite":  2}
+  ],
+  "Employee": [
+    {
+      "employeeFirstName": "John", "employeeLastName": "Doe", "Salary": 45645645,
+      "Gender": "Male", "DOB": "1990-01-15", "manager": "Yes", "jobSite": 1
+    },
+    {
+      "employeeFirstName": "Jane", "employeeLastName": "Smith", "Salary": 32234543,
+      "Gender": "Female", "DOB": "1988-03-22", "manager": "Yes", "jobSite": 2
+    },
+    {
+      "employeeFirstName": "Robert", "employeeLastName": "Johnson", "Salary": 453632,
+      "Gender": "Male", "DOB": "1995-07-10", "manager": "Yes", "jobSite": 3
+    },
+    {
+      "employeeFirstName": "Tom", "employeeLastName": "Jones", "Salary": 3223532,
+      "Gender": "Male", "DOB": "1980-05-10", "manager": "No", "jobSite": 3
+    },
+    {
+      "employeeFirstName": "Sarah", "employeeLastName": "Lee", "Salary": 567623,
+      "Gender": "Female", "DOB": "1995-12-20", "manager": "No", "jobSite": 2
+    },
+    {
+      "employeeFirstName": "Mike", "employeeLastName": "Smith", "Salary": 4421221,
+      "Gender": "Male", "DOB": "1975-01-05", "manager": "No", "jobSite": 1
+    },
+    {
+      "employeeFirstName": "Samantha", "employeeLastName": "Yong", "Salary": 344522,
+      "Gender": "Female", "DOB": "1995-12-20", "manager": "No", "jobSite": 3
+    },
+    {
+      "employeeFirstName": "Sarah", "employeeLastName": "Low", "Salary": 439023452,
+      "Gender": "Female", "DOB": "1995-12-20", "manager": "No", "jobSite": 2
+    },
+    {
+      "employeeFirstName": "Emily", "employeeLastName": "Chen", "Salary": 643902,
+      "Gender": "Female", "DOB": "1991-07-19", "manager": "No", "jobSite": 1
+    },
+    {
+      "employeeFirstName": "William", "employeeLastName": "Johnson", "Salary": 8934921,
+      "Gender": "Male", "DOB": "1985-02-14", "manager": "No", "jobSite": 3
+    },
+    {
+      "employeeFirstName": "Sophia", "employeeLastName": "Rodriguez", "Salary": 4334238,
+      "Gender": "Female", "DOB": "1999-10-31", "manager": "No", "jobSite": 2
+    },
+    {
+      "employeeFirstName": "Benjamin", "employeeLastName": "Lee", "Salary": 56432354,
+      "Gender": "Male", "DOB": "1988-05-08", "manager": "No", "jobSite": 1
+    },
+    {
+      "employeeFirstName": "Olivia", "employeeLastName": "Taylor", "Salary": 39334922,
+      "Gender": "Female", "DOB": "1995-12-01", "manager": "No", "jobSite": 3
+    }
+  ],
+  "Expenditure": [
+        {"amount": 1502.75, "description": "Utilities", "date": "2022-01-05", "category": "Bills", "jobSite": 1},
+        {"amount": 13450.00, "description": "Events", "date": "2022-01-10", "category": "Food", "jobSite": 1},
+        {"amount": 45345.00, "description": "Healthcare", "date": "2022-02-01", "category": "Employees", "jobSite": 1},
+        {"amount": 203232.00, "description": "Salary", "date": "2022-01-15", "category": "Job", "jobSite": 1},
+
+        {"amount": 3763.54, "description": "Utilities", "date": "2020-07-08", "category": "Bills", "jobSite": 2},
+        {"amount": 75324.40, "description": "Events", "date": "2020-06-14", "category": "Food", "jobSite": 2},
+        {"amount": 86734.00, "description": "Healthcare", "date": "2020-03-07", "category": "Employees", "jobSite": 2},
+        {"amount": 84455.00, "description": "Salary", "date": "2020-03-18", "category": "Job", "jobSite": 2},
+
+        {"amount": 6535.75, "description": "Utilities", "date": "2021-01-03", "category": "Bills", "jobSite": 3},
+        {"amount": 6743235.00, "description": "Events", "date": "2021-01-21", "category": "Food", "jobSite": 3},
+        {"amount": 75632.00, "description": "Healthcare", "date": "2021-02-23", "category": "Employees", "jobSite": 3},
+        {"amount": 75632.00, "description": "Salary", "date": "2021-01-06", "category": "Job", "jobSite": 3}
+  ],
+  "Income": [
+        {"amount": 6454.75, "description": "Revenue", "date": "2022-01-05", "category": "Job", "jobSite": 1},
+        {"amount": 89422.00, "description": "Freelance work", "date": "2022-01-10", "category": "Freelance", "jobSite": 1},
+        {"amount": 13465.00, "description": "Loans", "date": "2022-02-01", "category": "Other", "jobSite": 1},
+
+        {"amount": 9533.75, "description": "Revenue", "date": "2020-07-08", "category": "Job", "jobSite": 2},
+        {"amount": 45644.00, "description": "Freelance work", "date": "2020-06-14", "category": "Freelance", "jobSite": 2},
+        {"amount": 83423.00, "description": "Loans", "date": "2020-02-23", "category": "Other", "jobSite": 2},
+
+        {"amount": 9643.75, "description": "Revenue", "date": "2021-01-03", "category": "Job", "jobSite": 3},
+        {"amount": 83367.00, "description": "Freelance work", "date": "2021-01-21", "category": "Freelance", "jobSite": 3},
+        {"amount": 85548.00, "description": "Loans", "date": "2021-02-23", "category": "Other", "jobSite": 3}
+  ],
+
+  "Taxes":[
+        {"amount": 1502534.75, "description": "Income Tax", "date": "2022-01-05", "category": "Bills"},
+        {"amount": 13450.31, "description": "Property Tax", "date": "2022-01-10", "category": "Food"},
+        {"amount": 45345.35, "description": "Sales Tax", "date": "2022-02-01", "category": "Employees"}
+  ],
+
+  "JobSite": [
+    {"id": 1, "Name": "Jackson"},
+    {"id": 2,"Name": "Mayweather"},
+    {"id": 3,"Name": "Brooklyn"}
+  ]
+}
