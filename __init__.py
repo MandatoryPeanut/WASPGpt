@@ -1,6 +1,8 @@
+import logging
 import os
 from flask import Flask
 
+app = Flask(__name__)
 
 def create_app(test_config=None):
     # create and configure app
@@ -40,3 +42,7 @@ def create_app(test_config=None):
     app.add_url_rule('/', endpoint='index')
 
     return app
+
+if __name__ == "__main__":
+    logging.info("Starting app.")
+    app.run(host="0.0.0.0", port=8000)
