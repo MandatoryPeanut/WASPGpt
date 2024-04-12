@@ -10,7 +10,7 @@ https://flask.palletsprojects.com/en/3.0.x/
 https://openai.com/
 https://stackoverflow.com/questions/49580313/create-a-log-file
 https://docs.python.org/3/library/sqlite3.html#module-sqlite3
-
+Python: 3.11.5
 
 # Running the Application
 
