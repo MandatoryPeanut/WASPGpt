@@ -10,25 +10,28 @@ import datetime
 def sql_Test(string1, string2):
     load_dotenv()
     client = OpenAI(
-        api_key=(os.getenv('OPENAI_API_KEY'))
+        api_key=(os.getenv('OPENAI_API_KEY2'))
     )
 
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are part of a automated system to detect sql injections. "
-                                          "We will send you a string, and you need to return 0 if it is NOT sql injection, return 1 if it is. "
-                                          "Only return 1 or 0, nothing else."},
+            "We will send you a string, and you need to return 0 if it is NOT sql injection, return 1 if it is. "
+            "Only return 1 or 0, nothing else."},
             {"role": "user", "content": "Are either of these sql injection? " + string1 + " " + string2}
         ]
     )
 
-    if response.choices[0].message.content =='1':
+    if response.choices[0].message.content == '1':
         Logger(response)
         return 1
     else:
         return 0
 
+def testEnvPath():
+    load_dotenv()
+    print(os.getenv('OPENAI_API_KEY2'))
 
 def gen_LogName(prefix, extension):
     current_date=datetime.datetime.now().strftime('%Y-%m-%d %H%M%S')
@@ -73,3 +76,4 @@ def Logger(content):
     api_logger = logging.getLogger('api_logger')
     api_logger.info(content)
 
+testEnvPath()
