@@ -11,7 +11,7 @@
         <label for="username">Username</label>
         <input name="username" id="username" required>
         <label for="password">Password</label>
-        <input name="password" id="password" required>
+        <input type="password" name="password" id="password" required>
 
         {% elif user_type == 'employee' %}
         <label for="EmployeeFirstName">First Name</label>
@@ -19,7 +19,7 @@
         <label for="EmployeeLastName">Last Name</label>
         <input name="EmployeeLastName" id="EmployeeLastName" required>
         <label for="Salary">Salary</label>
-        <input name="Salary" id="Salary" required>
+        <input type="number" name="Salary" id="Salary" required>
 
         <label>Gender:</label>
         <fieldset>
@@ -63,7 +63,7 @@
         <label for="username">Username</label>
         <input name="username" id="Manager-username" required>
         <label for="password">Password</label>
-        <input name="password" id="Manager-password" required>
+        <input type="password" name="password" id="Manager-password" required>
 
         {%elif user_type == 'job-site'%}
         <label for="Name">Name</label>
