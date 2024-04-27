@@ -42,13 +42,17 @@ def register(user_type):
                 return redirect(url_for('index'))
 
             # Information for Admin
-            username = request.form['username']
-            password = request.form['password']
+            username = request.form['username'].strip()
+            password = request.form['password'].strip()
 
             if not username:
                 error = 'Username required.'
+                if username == '':
+                    error = 'Username cannot be empty spaces.'
             elif not password:
                 error = 'Password required'
+                if password == '':
+                    error = 'Password cannot be empty spaces.'
 
             if error is None:
                 db = get_db()
@@ -62,48 +66,64 @@ def register(user_type):
                     error = f"Administrator {username} is already registered."
                     flash(error)
             else:
+                flash(error)
                 return redirect(url_for("sites.index"))
 
         elif user_type == 'employee':
             # Information for Employee
-            firstName = request.form['EmployeeFirstName']
-            lastName = request.form['EmployeeLastName']
+            firstName = request.form['EmployeeFirstName'].strip()
+            lastName = request.form['EmployeeLastName'].strip()
             Salary = request.form['Salary']
             Gender = request.form['Gender']
             DOB = request.form['DOB']
             Manager = request.form['Manager']
             JobSite = request.form['JobSite']
 
-            db = get_db()
-            existing_emp = db.execute(
-                "SELECT EmployeeFirstName, EmployeeLastName FROM Employee "
-                "WHERE EmployeeFirstName = ? AND EmployeeLastName = ?;", (firstName, lastName)
-            ).fetchall()
-            if existing_emp is None:
-                error = f"Employee {firstName, lastName} already exists."
-                flash(error)
+            if firstName == '':
+                error = "Employees name cannot be empty."
+            elif lastName == '':
+                error = "Employees name cannot be empty."
+
+            if error is None:
+
+                db = get_db()
+                existing_emp = db.execute(
+                    "SELECT EmployeeFirstName, EmployeeLastName FROM Employee "
+                    "WHERE EmployeeFirstName = ? AND EmployeeLastName = ?;", (firstName, lastName)
+                ).fetchall()
+                if existing_emp is None:
+                    error = f"Employee {firstName, lastName} already exists."
+                    flash(error)
+                else:
+                    db.execute(
+                        "INSERT INTO Employee (EmployeeFirstName, EmployeeLastName, Salary, Gender, DOB, Manager, JobSite) "
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        (firstName, lastName, Salary, Gender, DOB, Manager, JobSite)
+                    )
+                    db.commit()
+                    flash("Employee registered successfully.")
+                    return redirect(url_for("sites.index"))
             else:
-                db.execute(
-                    "INSERT INTO Employee (EmployeeFirstName, EmployeeLastName, Salary, Gender, DOB, Manager, JobSite) "
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    (firstName, lastName, Salary, Gender, DOB, Manager, JobSite)
-                )
-                db.commit()
-                flash("Employee registered successfully.")
+                flash(error)
                 return redirect(url_for("sites.index"))
 
         elif user_type == 'manager':
             if session['user_status'] != 'admin':
                 flash('You do not have permission to perform this action.')
                 return redirect(url_for('index'))
+
             # Information for Manager
-            username = request.form['Manager-username']
-            password = request.form['Manager-password']
+            username = request.form['Manager-username'].strip()
+            password = request.form['Manager-password'].strip()
 
             if not username:
                 error = 'Username required.'
+                if username == '':
+                    error = 'Username cannot be empty spaces.'
             elif not password:
                 error = 'Password required'
+                if password == '':
+                    error = 'Password cannot be empty spaces.'
 
             if error is None:
                 db = get_db()
@@ -117,19 +137,32 @@ def register(user_type):
                     error = f"Manager {username} is already registered."
                     flash(error)
             else:
+                flash(error)
                 return redirect(url_for("sites.index"))
 
         elif user_type == 'job-site':
-            Name = request.form['Name']
-            db = get_db()
-            existing_site = db.execute("SELECT Name FROM JobSite WHERE Name = ?;", (Name,)).fetchone()
-            if existing_site is not None:
-                error = f"Job Site with the name {Name} already exists."
-                flash(error)
+            if session['user_status'] != 'admin':
+                flash('You do not have permission to perform this action.')
+                return redirect(url_for('index'))
+            error = None
+            Name = request.form['Name'].strip()
+
+            if Name == '':
+                error = "JobSite's name cannot be empty."
+
+            if error is None:
+                db = get_db()
+                existing_site = db.execute("SELECT Name FROM JobSite WHERE Name = ?;", (Name,)).fetchone()
+                if existing_site is not None:
+                    error = f"Job Site with the name {Name} already exists."
+                    flash(error)
+                else:
+                    db.execute("INSERT INTO JobSite (Name) VALUES (?);", (Name,))
+                    db.commit()
+                    flash("Job Site successfully created.")
+                    return redirect(url_for("sites.index"))
             else:
-                db.execute("INSERT INTO JobSite (Name) VALUES (?);", (Name,))
-                db.commit()
-                flash("Job Site successfully created.")
+                flash(error)
                 return redirect(url_for("sites.index"))
 
         if error is None:

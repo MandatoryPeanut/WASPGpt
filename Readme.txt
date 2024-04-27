@@ -18,7 +18,7 @@ First you need to navigate to the folder your Application is installed in.
 Next you'll need to initialize the database. Run this command to do so: flask --app WASPGpt init-db
 Then you'll need to fill the database with data, you can do this by running this command: flask --app WASPGpt fill-db (This checks the for the json file, which contains data in the Project directory.)
 If you need to query the data in your database to ensure everything is correct use this command: flask --app WASPGpt test-db
-Then to run this application, run this command: flask --app WASPGpt run --debug
+Then to run this application, run this command: flask --app WASPGpt --debug run
 (The debug tag is for testing purposes, gives you access to the console to see what's going on, or wrong.)
 
 By default, flask uses port 5000. You can specify a certain port to use e.g. flask run --port {port}
