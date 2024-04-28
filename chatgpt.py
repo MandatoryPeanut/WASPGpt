@@ -25,9 +25,10 @@ def sql_Test(string1, string2):
 
     if response.choices[0].message.content == '1':
         try:
-            Logger(response, "Username Input: " + string1 + " " + "Password Input : " + string2)
+            Logger(response)
+            Logger("Username Input: " + string1 + " " + "Password Input : " + string2)
         except Exception as e:
-            Logger("Exception occured: ", str(e))
+            Logger("Exception occured: " + str(e))
             return 1
         return 1
     else:
@@ -41,7 +42,7 @@ def gen_LogName(prefix, extension):
     current_date=datetime.datetime.now().strftime('%Y-%m-%d %H%M%S')
     return f"WASPGpt/logs/{prefix}_{current_date}_{extension}"
 
-def Logger(content, content2):
+def Logger(content):
     logging_config = dict(
         version=1,
         formatters={
@@ -79,4 +80,3 @@ def Logger(content, content2):
     dictConfig(logging_config)
     api_logger = logging.getLogger('api_logger')
     api_logger.info(content)
-    api_logger.info(content2)
