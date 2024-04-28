@@ -25,8 +25,8 @@ def sql_Test(string1, string2):
 
     if response.choices[0].message.content == '1':
         try:
-            Logger(response)
             Logger("Username Input: " + string1 + " " + "Password Input : " + string2)
+            Logger(response)
         except Exception as e:
             Logger("Exception occured: " + str(e))
             return 1
@@ -39,7 +39,7 @@ def testEnvPath():
     print(os.getenv('OPENAI_API_KEY'))
 
 def gen_LogName(prefix, extension):
-    current_date=datetime.datetime.now().strftime('%Y-%m-%d %H%M%S')
+    current_date=datetime.datetime.now().strftime('%Y_%m_%d__%H%M%S')
     return f"WASPGpt/logs/{prefix}_{current_date}_{extension}"
 
 def Logger(content):
