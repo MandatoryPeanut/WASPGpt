@@ -10,7 +10,7 @@ import datetime
 def sql_Test(string1, string2):
     load_dotenv()
     client = OpenAI(
-        api_key=(os.getenv('OPENAI_API_KEY2'))
+        api_key=(os.getenv('OPENAI_API_KEY'))
     )
 
     response = client.chat.completions.create(
@@ -34,7 +34,7 @@ def sql_Test(string1, string2):
 
 def testEnvPath():
     load_dotenv()
-    print(os.getenv('OPENAI_API_KEY2'))
+    print(os.getenv('OPENAI_API_KEY'))
 
 def gen_LogName(prefix, extension):
     current_date=datetime.datetime.now().strftime('%Y-%m-%d %H%M%S')
