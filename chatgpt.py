@@ -26,7 +26,8 @@ def sql_Test(string1, string2):
     if response.choices[0].message.content == '1':
         try:
             Logger(response, "Username Input: " + string1 + " " + "Password Input : " + string2)
-        except OSError:
+        except Exception as e:
+            Logger("Exception occured: ", str(e))
             return 1
         return 1
     else:
