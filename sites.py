@@ -22,11 +22,15 @@ def index():
         "SELECT Username FROM Admin ORDER BY id;"
     ).fetchall()
 
+    Managers = db.execute(
+        "SELECT Username FROM Manager ORDER BY id;"
+    ).fetchall()
+
     Taxes = db.execute(
         "SELECT Amount, Description, Date, Category FROM Taxes ORDER BY id;"
     ).fetchall()
 
-    return render_template('sites/index.html', jobSites=jobSites, Admins=Admins, Taxes=Taxes)
+    return render_template('sites/index.html', jobSites=jobSites, Admins=Admins, Taxes=Taxes, Managers=Managers)
 
 
 @bp.route('/register/<string:user_type>', methods=['GET', 'POST'])

@@ -37,6 +37,21 @@
       <hr>
     {% endif %}
   {% endfor %}
+
+<h1>Managers:</h1>
+  {% for manager in Managers %}
+    <article class = "Managers">
+      <header>
+        <div>
+          <h1>{{ manager['Username'] }}</h1>
+        </div>
+      </header>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+
 <h1>Cumulative Taxes:</h1>
   {% for tax in Taxes %}
     <article class = "Taxes">
