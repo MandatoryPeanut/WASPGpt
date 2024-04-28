@@ -24,11 +24,11 @@ def sql_Test(string1, string2):
     )
 
     if response.choices[0].message.content == '1':
-        try:
-            Logger(response, "Username Input: " + string1.replace('"', "") + " " + "Password Input : " + string2.replace('"', ""))
-        except Exception as e:
-            Logger("Exception occured: ", str(e))
-            return 1
+        # try: # Disabling for issue on Linux Servers
+        #     Logger(response, "Username Input: " + string1.replace('"', "") + " " + "Password Input : " + string2.replace('"', ""))
+        # except Exception as e:
+        #     Logger("Exception occured: ", str(e))
+        #     return 1
         return 1
     else:
         return 0
