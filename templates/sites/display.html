@@ -15,7 +15,7 @@
             <div>Gender: {{ emp['Gender'] }}</div>
             <div>Date of Birth: {{ emp['DOB'] }}</div>
             <div>Manager: {{ emp['Manager'] }}</div>
-            <a class="action" href="{{url_for('sites.edit', id=emp['id']) }}">Edit</a>
+            <a class="action" href="{{url_for('sites.edit', id=emp['id'], user_type='emp') }}">Edit</a>
         </div>
     </header>
 </article>

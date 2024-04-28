@@ -15,19 +15,36 @@
            value="{{ request.form['EmployeeLastName'] or data['EmployeeLastName'] }}" required>
 
     <label for="Salary">Salary:</label>
-    <input name="Salary" id="Salary" value="{{ request.form['Salary'] or data['Salary'] }}" required>
+    <input type="number" name="Salary" id="Salary" value="{{ request.form['Salary'] or data['Salary'] }}" required>
 
-    <label for="Gender">Gender:</label>
-    <input name="Gender" id="Gender" value="{{ request.form['Gender'] or data['Gender'] }}" required>
+
+    <label>Gender:</label>
+        <fieldset>
+        <div>
+        <input type="radio" name="Gender" id="GenderMale" value="Male" required/>
+            <label for="GenderMale">Male</label>
+        </div>
+        <div>
+            <input type="radio" name="Gender" id="GenderFemale" value="Female" required/>
+            <label for="GenderFemale">Female</label>
+        </div>
+        </fieldset>
 
     <label for="DOB">DOB:</label>
-    <input name="DOB" id="DOB" value="{{ request.form['DOB'] or data['DOB'] }}" required>
+    <input type="date" name="DOB" id="DOB" value="{{ request.form['DOB'] or data['DOB'] }}" required>
 
-    <label for="Manager">Manager:</label>
-    <input name="Manager" id="Manager" value="{{ request.form['Manager'] or data['Manager'] }}" required>
 
-    <label for="JobSite">JobSite:</label>
-    <input name="JobSite" id="JobSite" value="{{ request.form['JobSite'] or data['JobSite'] }}" required>
+        <label>Manager:</label>
+        <fieldset>
+        <div>
+        <input type="radio" name="Manager" id="ManagerYes" value="Yes" required/>
+            <label for="ManagerYes">Yes</label>
+        </div>
+        <div>
+            <input type="radio" name="Manager" id="ManagerNo" value="No" required/>
+            <label for="ManagerNo">No</label>
+        </div>
+        </fieldset>
 
     <input type="submit" value="Save">
 </form>

@@ -203,26 +203,24 @@ def display(jobSiteID):
 def edit(id):
     data = getEmployeeData(id)
     if request.method == 'POST':
-        firstName = request.form['EmployeeFirstName']
-        lastName = request.form['EmployeeLastName']
+        firstName = request.form['EmployeeFirstName'].strip()
+        lastName = request.form['EmployeeLastName'].strip()
         Salary = request.form['Salary']
-        Gender = request.form['Gender']
+        Gender = request.form.get('Gender')
         DOB = request.form['DOB']
         Manager = request.form['Manager']
-        JobSite = request.form['JobSite']
-
         error = None
 
-        if not firstName or not lastName or not Salary or not Gender or not DOB or not Manager or not JobSite:
-            error = 'Missing important information.'
+        if not firstName or lastName =='':
+            error = 'Employees name cannot be empty.'
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
                 "UPDATE Employee SET EmployeeFirstName = ?, EmployeeLastName = ?, Salary = ?, "
-                "Gender = ?, DOB = ?, Manager = ?, JobSite = ? WHERE Employee.id = ?;",
-                (firstName, lastName, Salary, Gender, DOB, Manager, JobSite, id)
+                "Gender = ?, DOB = ?, Manager = ? WHERE Employee.id = ?;",
+                (firstName, lastName, Salary, Gender, DOB, Manager, id)
             )
             db.commit()
             flash("Update successful.")
