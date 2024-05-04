@@ -12,7 +12,7 @@ bp = Blueprint('sites', __name__)
 
 @bp.route('/')
 @login_required
-def index():
+def index():  # gathers data for populating index html page
     db = get_db()
     jobSites = db.execute(
         "SELECT id, Name FROM JobSite ORDER BY id;"
@@ -33,7 +33,7 @@ def index():
     return render_template('sites/index.html', jobSites=jobSites, Admins=Admins, Taxes=Taxes, Managers=Managers)
 
 
-@bp.route('/register/<string:user_type>', methods=['GET', 'POST'])
+@bp.route('/register/<string:user_type>', methods=['GET', 'POST'])  # forms request fields for registration html page
 @login_required
 def register(user_type):
     sites = getSites()  # Data for listing sites
@@ -176,7 +176,7 @@ def register(user_type):
     return render_template('sites/register.html', user_type=user_type, sites=sites)
 
 
-@bp.route('/display/<int:jobSiteID>', methods=['GET', 'POST'])
+@bp.route('/display/<int:jobSiteID>', methods=['GET', 'POST'])  # gathers information to populate display html page
 @login_required
 def display(jobSiteID):
     db = get_db()
@@ -198,7 +198,7 @@ def display(jobSiteID):
         Expenditure=Expenditure, jobSiteID=jobSiteID, Name=Name)
 
 
-@bp.route('/edit/<int:id>', methods=['POST', 'GET'])
+@bp.route('/edit/<int:id>', methods=['POST', 'GET'])  # forms request fields for editing an Employee
 @login_required
 def edit(id):
     data = getEmployeeData(id)
@@ -228,7 +228,7 @@ def edit(id):
     return render_template('sites/edit.html', data=data)
 
 
-def getEmployeeData(id):
+def getEmployeeData(id):  # gets employees data
     data = get_db().execute(
         "SELECT * FROM Employee JOIN JobSite ON JobSite.id = Employee.JobSite WHERE Employee.id = ?;",
         (id,)
@@ -238,7 +238,7 @@ def getEmployeeData(id):
     return data
 
 
-def getSites():
+def getSites():  # gets JobSites Name
     sites = get_db().execute(
         "SELECT * FROM JobSite;"
     ).fetchall()
@@ -247,7 +247,7 @@ def getSites():
 
 @bp.route('/delete/<int:id>', methods=['POST', 'GET'])
 @login_required
-def delete(id):
+def delete(id):  # deletes employee data
     db = get_db()
     db.execute("DELETE FROM Employee WHERE id = ?;", (id,))
     db.commit()

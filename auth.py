@@ -10,11 +10,11 @@ from .db import get_db
 
 from .chatgpt import sql_Test
 
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+bp = Blueprint('auth', __name__, url_prefix='/auth')  # auth directory url extension
 
 
 @bp.route('/login', methods=('GET', 'POST'))
-def login():
+def login():  # auth login function, handles login request fields
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -56,7 +56,7 @@ def login():
 
 
 @bp.before_app_request
-def load_logged_in_user():
+def load_logged_in_user():  # handles user last login session
     user_id = session.get('user_id')
     user_status = session.get('user_status')
     if user_id is None:
@@ -72,14 +72,13 @@ def load_logged_in_user():
             ).fetchone()
 
 
-
 @bp.route('/logout')
-def logout():
+def logout():  # logs user out and clears the session
     session.clear()
     return redirect(url_for('index'))
 
 
-def login_required(view):
+def login_required(view):  # requires user to be logged in to view request fields
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user is None:

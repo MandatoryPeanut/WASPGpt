@@ -1,3 +1,4 @@
+<!-- HTML page for displaying each JobSites information. -->
 {% extends 'base.html' %}
 {% block header %}
         <h1>{% block title %} {{ Name['Name'] }} {% endblock %}</h1>
@@ -7,6 +8,8 @@
 {% block content %}
 <h1>Employees:</h1>
 {% for emp in Employees %}
+<!-- Fields for Employee's information -->
+
 <article class="Employees">
     <header>
         <div>
@@ -24,6 +27,8 @@
     {% endif %}
   {% endfor %}
 
+<!-- Fields for JobSites Income -->
+
 <h1>Income:</h1>
 {% for inc in Income %}
 <article class="Income">
@@ -40,6 +45,8 @@
       <hr>
     {% endif %}
   {% endfor %}
+
+<!-- Fields for JobSites Expenditure -->
 
 <h1>Expenditure:</h1>
 {% for exp in Expenditure %}

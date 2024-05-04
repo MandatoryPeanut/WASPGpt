@@ -23,18 +23,23 @@ def create_app(test_config=None):
         pass
 
     from . import db
+    # imports initialize application function
     db.init_app(app)
 
     from . import db
+    # imports fill database function
     db.fill_app(app)
 
     from . import db
+    # imports test database function
     db.test_app(app)
 
     from . import auth
+    # imports auth blueprint
     app.register_blueprint(auth.bp)
 
     from . import sites
+    # imports sites blueprint
     app.register_blueprint(sites.bp)
     app.add_url_rule('/', endpoint='index')
 

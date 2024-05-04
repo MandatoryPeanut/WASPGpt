@@ -7,18 +7,18 @@ import sys
 import datetime
 
 
-def sql_Test(string1, string2):
+def sql_Test(string1, string2):  # request to OpenAI to detect if input is SQL injection
     load_dotenv()
     client = OpenAI(
-        api_key=(os.getenv('OPENAI_API_KEY'))
+        api_key=(os.getenv('OPENAI_API_KEY'))  # Grab API key from .env
     )
 
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are part of a automated system to detect sql injections. "
-            "We will send you a string, and you need to return 0 if it is NOT sql injection, return 1 if it is. "
-            "Only return 1 or 0, nothing else."},
+                                          "We will send you a string, and you need to return 0 if it is NOT sql injection, return 1 if it is. "
+                                          "Only return 1 or 0, nothing else."},
             {"role": "user", "content": "Are either of these sql injection? " + string1 + " " + string2}
         ]
     )
@@ -33,15 +33,18 @@ def sql_Test(string1, string2):
     else:
         return 0
 
-def testEnvPath():
+
+def testEnvPath():  # Test function to see if your .env is reachable
     load_dotenv()
     print(os.getenv('OPENAI_API_KEY'))
 
-def gen_LogName(prefix, extension):
-    current_date=datetime.datetime.now().strftime('%Y_%m_%d__%H%M%S')
+
+def gen_LogName(prefix, extension):  # Generates name for log files
+    current_date = datetime.datetime.now().strftime('%Y_%m_%d__%H%M%S')
     return f"WASPGpt/logs/{prefix}_{current_date}_{extension}"
 
-def Logger(content, content2):
+
+def Logger(content, content2):  # Logs two sets of information
     logging_config = dict(
         version=1,
         formatters={

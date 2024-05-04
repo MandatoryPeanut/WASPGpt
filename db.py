@@ -24,7 +24,7 @@ def close_db(e=None):  # checks if connection exist, if so its closed
         db.close()
 
 
-def init_db():
+def init_db():  # initializes the database, erasing all the data and resetting the tables
     db = get_db()
     with current_app.open_resource('wasp.sql') as f:  # opens database relative to package
         db.executescript(f.read().decode('utf8'))
@@ -80,6 +80,7 @@ def fill_db():  # Fills the database, with data found in json file
                 manager = data.get('manager')
                 jobSite = data.get('jobSite')
 
+                # checks if user is registered or not
                 existing_user = db.execute(
                     "SELECT id FROM Employee WHERE EmployeeFirstName = ? AND EmployeeLastName = ?;",
                     (firstName, lastName)).fetchone()
@@ -141,7 +142,7 @@ def fill_db():  # Fills the database, with data found in json file
     db.commit()
 
 
-def test_db():
+def test_db():  # Incase you need to see which tables are causing issues
     db = get_db()
     Admin = db.execute(
         "SELECT * FROM Admin;"
